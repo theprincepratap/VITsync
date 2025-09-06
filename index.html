@@ -1,15 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VITsync</title> | Product Roadmap</title>
+    <title>VITsync | Product Roadmap</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: "Academic Professional" - A clean, trustworthy palette using a light gray background (bg-slate-50), deep navy for text (text-slate-800), and a thoughtful slate-blue (slate-600) as the primary accent. This conveys seriousness, innovation, and academic integrity. -->
-    <!-- Application Structure Plan: This single-page site is structured as a narrative presentation to guide faculty. It starts with the high-level Vision, drills down into the specific Problem it solves at VIT, presents the Solution (CogniMatch), outlines the development plan via an interactive Roadmap, and concludes with Success Metrics. This top-down structure is logical and persuasive, answering key questions a reviewer would have in a natural order. The interactive timeline allows for a clean overview with the ability to drill down for details, respecting the audience's time. -->
+    <!-- Chosen Palette: "Modern Tech Gradient" - A vibrant palette using a clean white background, deep navy for text, and a blue-to-indigo gradient as the primary accent. This conveys innovation, energy, and a modern tech aesthetic. -->
+    <!-- Application Structure Plan: This single-page site is structured as a narrative presentation to guide faculty. It starts with the high-level Vision, drills down into the specific Problem it solves at VIT, presents the Solution (VITsync), outlines the development plan via an interactive Roadmap, and concludes with Success Metrics. This top-down structure is logical and persuasive, answering key questions a reviewer would have in a natural order. The interactive timeline allows for a clean overview with the ability to drill down for details, respecting the audience's time. -->
     <!-- Visualization & Content Choices: 
         - Report Info: The project phases and their focus. -> Goal: Change/Organize -> Viz/Method: A Doughnut Chart (Chart.js/Canvas) showing "Phase Effort Allocation". -> Interaction: Hover to see percentages. -> Justification: A doughnut chart is excellent for showing part-to-whole relationships, visually communicating the strategic focus of each development phase (e.g., shifting from core features to AI).
         - Report Info: The roadmap timeline and tasks. -> Goal: Organize/Change -> Viz/Method: An interactive vertical timeline (HTML/CSS/Tailwind). -> Interaction: Clicking on a phase title toggles the visibility of its detailed tasks (accordion-style JS). -> Justification: A vertical timeline is ideal for scannability on all devices. The interactivity prevents information overload, allowing faculty to explore the roadmap at their own pace.
@@ -34,7 +33,7 @@
             top: 0;
             bottom: 0;
             width: 2px;
-            background-color: #e2e8f0;
+            background-color: #e2e8f0; /* slate-200 */
         }
         .timeline-dot {
             position: absolute;
@@ -43,194 +42,305 @@
             height: 20px;
             width: 20px;
             background-color: white;
-            border: 3px solid #475569;
             border-radius: 50%;
             z-index: 10;
         }
+        .roadmap-toggle .chevron {
+             transition: transform 0.3s ease;
+        }
+        .roadmap-toggle.open .chevron {
+            transform: rotate(90deg);
+        }
+        .hero-gradient {
+            background-image: linear-gradient(to bottom right, #f0f4ff, #ffffff);
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-700 antialiased">
+<body class="bg-gray-50 text-slate-700 antialiased">
 
     <!-- Header & Navigation -->
-    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-30 border-b border-slate-200">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-slate-800">
-                VIT<span class="text-slate-600">sync</span>
-            </h1>
-            <nav class="hidden md:flex space-x-6 text-sm font-semibold">
-                <a href="#problem" class="hover:text-slate-900 transition-colors">The Problem</a>
-                <a href="#solution" class="hover:text-slate-900 transition-colors">Our Solution</a>
-                <a href="#roadmap" class="hover:text-slate-900 transition-colors">Roadmap</a>
-                <a href="#metrics" class="hover:text-slate-900 transition-colors">Success Metrics</a>
-            </nav>
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-30 border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <h1 class="text-2xl font-bold text-slate-900">
+                    VIT<span class="text-indigo-600">sync</span>
+                </h1>
+                <nav class="hidden md:flex space-x-8 text-sm font-semibold">
+                    <a href="#problem" class="text-slate-600 hover:text-indigo-600 transition-colors">The Story</a>
+                    <a href="#solution" class="text-slate-600 hover:text-indigo-600 transition-colors">Our Solution</a>
+                    <a href="#roadmap" class="text-slate-600 hover:text-indigo-600 transition-colors">Roadmap</a>
+                    <a href="#creator" class="text-slate-600 hover:text-indigo-600 transition-colors">The Innovator</a>
+                </nav>
+            </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-6 py-12 md:py-20">
+    <main>
 
         <!-- Hero Section -->
-        <section class="text-center max-w-4xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight">An AI-Powered Collaboration Engine for VIT Chennai</h2>
-            <p class="mt-6 text-lg text-slate-600">VITsync is a strategic project designed to intelligently connect students for academic and project-based collaboration, overcoming the structural challenges of the Fully Flexible Credit System (FFCS) and fostering a more connected, innovative campus.</p>
-        </section>
-
-        <!-- The Problem Section -->
-        <section id="problem" class="mt-20 md:mt-28">
-            <div class="text-center max-w-3xl mx-auto">
-                <h3 class="text-3xl font-bold text-slate-800">The Collaboration Gap at VIT Chennai</h3>
-                <p class="mt-4 text-slate-600">The innovative FFCS system, while offering flexibility, creates a significant challenge: a fragmented student network. Finding the right people for critical academic work is inefficient and often left to chance.</p>
-            </div>
-            <div class="mt-12 grid md:grid-cols-3 gap-8 text-center">
-                <div class="bg-white p-8 rounded-xl border border-slate-200">
-                    <div class="text-4xl">🧩</div>
-                    <h4 class="mt-4 text-lg font-semibold text-slate-800">Fragmented Networks</h4>
-                    <p class="mt-2 text-sm text-slate-600">With classmates changing every semester for every course, students struggle to build stable, long-term teams for major projects.</p>
-                </div>
-                <div class="bg-white p-8 rounded-xl border border-slate-200">
-                    <div class="text-4xl">🔎</div>
-                    <h4 class="mt-4 text-lg font-semibold text-slate-800">Inefficient Search</h4>
-                    <p class="mt-2 text-sm text-slate-600">Students resort to spamming large, impersonal WhatsApp groups or social media, a "shot in the dark" approach to finding skilled partners.</p>
-                </div>
-                <div class="bg-white p-8 rounded-xl border border-slate-200">
-                    <div class="text-4xl">🤷‍♂️</div>
-                    <h4 class="mt-4 text-lg font-semibold text-slate-800">Uncertain Skillsets</h4>
-                    <p class="mt-2 text-sm text-slate-600">There is no reliable way to verify a potential partner's skills or commitment level, leading to unbalanced teams and project risks.</p>
-                </div>
+        <section class="py-20 md:py-28 hero-gradient">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">From a Great Idea to a Powerful Software: <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Let's Build the Team.</span></h2>
+                <p class="mt-6 text-lg text-slate-600">VITsync is a platform born from a simple need: to connect talented students with great ideas, enabling them to build powerful software and innovate together. It's an AI-powered engine designed to build the perfect team for every project at VIT Chennai.</p>
             </div>
         </section>
 
-        <!-- The Solution Section -->
-        <section id="solution" class="mt-20 md:mt-28">
-            <div class="text-center max-w-3xl mx-auto">
-                <h3 class="text-3xl font-bold text-slate-800">The Solution: Intelligent Matching</h3>
-                <p class="mt-4 text-slate-600">VITsync replaces guesswork with intelligence. Our platform provides two powerful, purpose-built tools to find the perfect collaborator.</p>
-            </div>
-            <div class="mt-12 grid lg:grid-cols-2 gap-8 items-start">
-                <div class="bg-white p-8 rounded-xl border border-slate-200 h-full">
-                    <h4 class="text-xl font-bold text-slate-800">1. The AI Discovery Feed</h4>
-                    <p class="mt-3 text-slate-600">Our core feature is a personalized feed of recommended collaborators. The AI analyzes every student's profile—their skills, active courses, and project goals—to suggest the most compatible partners. Each suggestion comes with a "Match Reason," explaining why the connection is relevant.</p>
-                    <div class="mt-6 bg-slate-100 p-4 rounded-lg">
-                        <p class="font-mono text-sm"><span class="font-semibold text-slate-700">AI Match:</span> Anjali Sharma (92%)</p>
-                        <p class="font-mono text-xs mt-1 text-slate-500">> Reason: You need a <span class="text-slate-800 font-medium">React.js</span> developer for your <span class="text-slate-800 font-medium">MGT1022</span> project. Anjali has this skill and is also in your course.</p>
+        <!-- The Problem Section (Rewritten with the story) -->
+        <section id="problem" class="py-16 md:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h3 class="text-3xl font-bold text-slate-900">The Innovator's Dilemma at VIT</h3>
+                     <div class="mt-6 text-slate-600 text-left border-l-4 border-indigo-200 pl-6 italic">
+                        <p>"I have a brilliant idea for a project. I know it can become a powerful software. I need a student who can work with me, whose technology and ideas match my vision."</p>
+                        <p class="mt-2">"Maybe someone else on campus also needs a team just like this. But where do we find each other? There's no platform where students like us can come together. Without the right team, our idea will just remain an idea."</p>
+                        <p class="text-right mt-2 font-semibold text-slate-500">- Every Ambitious Student, VIT</p>
+                    </div>
+                     <p class="mt-8 text-slate-600">This story is the silent struggle of every innovator on campus. VIT is filled with talent, but it's disconnected. Our project directly addresses the systemic issues that keep great ideas from becoming a reality.</p>
+                </div>
+                <div class="mt-12 grid md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-md card-hover">
+                        <div class="text-5xl">💡</div>
+                        <h4 class="mt-4 text-lg font-semibold text-slate-800">Ideas Without Momentum</h4>
+                        <p class="mt-2 text-sm text-slate-600">Brilliant project ideas stall because innovators can't find the crucial first teammates to get started and build momentum.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-md card-hover">
+                        <div class="text-5xl">🎲</div>
+                        <h4 class="mt-4 text-lg font-semibold text-slate-800">High-Risk Team Formation</h4>
+                        <p class="mt-2 text-sm text-slate-600">Choosing teammates is a gamble based on social circles, often leading to mismatched skills and unbalanced, ineffective teams.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-md card-hover">
+                        <div class="text-5xl">🤫</div>
+                        <h4 class="mt-4 text-lg font-semibold text-slate-800">The Isolation of Talent</h4>
+                        <p class="mt-2 text-sm text-slate-600">A student can be an expert in a key technology, but if they're not in the right social circles, their skills remain hidden and unused.</p>
                     </div>
                 </div>
-                <div class="bg-white p-8 rounded-xl border border-slate-200 h-full">
-                    <h4 class="text-xl font-bold text-slate-800">2. The Semantic Search Engine</h4>
-                    <p class="mt-3 text-slate-600">For specific needs, our advanced search allows users to find partners using natural language. A user can simply type "looking for a machine learning expert" and the AI will understand the intent, finding profiles with related skills like Python, TensorFlow, and Data Science, not just the exact keywords.</p>
-                     <div class="mt-6">
-                        <input type="text" placeholder="Search for 'machine learning', 'web app project'..." class="w-full p-3 border border-slate-300 rounded-lg text-sm bg-white" disabled>
+            </div>
+        </section>
+
+        <!-- The Solution Section (Reframed around Projects) -->
+        <section id="solution" class="py-16 md:py-24 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h3 class="text-3xl font-bold text-slate-900">The Solution: A 3-Step Innovation Workflow</h3>
+                    <p class="mt-4 text-slate-600">VITsync provides a structured, efficient, and intelligent workflow to take an idea from concept to collaboration.</p>
+                </div>
+                <div class="mt-12 grid lg:grid-cols-3 gap-8 items-start">
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200 h-full shadow-lg card-hover">
+                        <h4 class="text-xl font-bold text-slate-800"><span class="text-indigo-500 font-black text-2xl mr-2">1.</span> Create a Project Card</h4>
+                        <p class="mt-3 text-slate-600">An innovator starts by creating a "Project Card" with the project vision, required skills, and the team size limit. This card acts as the central hub for their idea.</p>
+                        <div class="mt-6 bg-slate-100 p-4 rounded-lg border border-slate-200">
+                            <p class="font-semibold text-slate-700">Project: Campus Resource Manager</p>
+                            <p class="text-xs mt-1 text-slate-500">Team Limit: 3 | Needs: 1x React, 1x Django</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200 h-full shadow-lg card-hover">
+                        <h4 class="text-xl font-bold text-slate-800"><span class="text-indigo-500 font-black text-2xl mr-2">2.</span> Discover & Get Matched</h4>
+                        <p class="mt-3 text-slate-600">Other students can discover this project card. Our AI also proactively recommends the project to students with matching skills, inviting them to apply and join the team.</p>
+                         <div class="mt-6 bg-slate-100 p-4 rounded-lg border border-slate-200">
+                           <p class="font-semibold text-slate-700">AI Match for Anjali Sharma:</p>
+                           <p class="font-mono text-sm mt-1">"A project needs your React.js skills!"</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200 h-full shadow-lg card-hover">
+                        <h4 class="text-xl font-bold text-slate-800"><span class="text-indigo-500 font-black text-2xl mr-2">3.</span> Build Your Team & Connect</h4>
+                        <p class="mt-3 text-slate-600">The project creator manages applications. Once a student is accepted, they are added to the team, and a private space is created where they can share contacts and start collaborating. The problem is solved.</p>
+                         <div class="mt-6 bg-slate-100 p-4 rounded-lg border border-slate-200">
+                           <p class="font-semibold text-slate-700">Team Status: 2/3 Filled</p>
+                           <p class="font-mono text-sm mt-1 text-green-600">Anjali Sharma joined! Chat is now active.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Product Roadmap Section -->
-        <section id="roadmap" class="mt-20 md:mt-28">
-            <div class="text-center max-w-3xl mx-auto">
-                <h3 class="text-3xl font-bold text-slate-800">Product Development Roadmap</h3>
-                <p class="mt-4 text-slate-600">Our development is structured in three strategic phases, starting with a powerful Minimum Viable Product (MVP) and progressively layering in advanced AI capabilities. This approach ensures we deliver value quickly while building a sophisticated, scalable platform.</p>
-            </div>
-            <div class="mt-12 grid lg:grid-cols-3 gap-8 items-start">
-                <div class="lg:col-span-2">
-                    <div id="timeline" class="relative pl-10 pt-2">
-                        <!-- Phase 1 -->
-                        <div class="timeline-item mb-12">
-                            <div class="timeline-dot"></div>
-                            <button class="roadmap-toggle w-full text-left">
-                                <h4 class="text-xl font-bold text-slate-800">Phase 1: MVP & Core Functionality</h4>
-                                <p class="text-sm font-semibold text-slate-500">Q4 2025 - Q1 2026</p>
-                                <p class="mt-2 text-slate-600">Focus: Launch a stable platform that solves the core problem with a powerful, filter-based search engine that simulates AI, while collecting the data needed for true machine learning.</p>
-                            </button>
-                            <ul class="roadmap-details hidden mt-4 space-y-2 text-sm pl-4 border-l-2 border-slate-200 ml-2">
-                                <li>✅ Implement VIT Email-only Authentication</li>
-                                <li>✅ Develop Detailed Student Profiles (Skills, Courses, Goals)</li>
-                                <li>✅ Build the "Advanced Search" with multi-faceted filtering</li>
-                                <li>✅ Implement LinkedIn-style "Connect Request" system</li>
-                                <li>✅ Launch secure one-on-one chat upon successful connection</li>
-                                <li>✅ Deploy MVP before Winter semester registration</li>
-                            </ul>
-                        </div>
-                        <!-- Phase 2 -->
-                        <div class="timeline-item mb-12">
-                           <div class="timeline-dot"></div>
-                           <button class="roadmap-toggle w-full text-left">
-                                <h4 class="text-xl font-bold text-slate-800">Phase 2: AI Integration & Community Growth</h4>
-                                <p class="text-sm font-semibold text-slate-500">Q2 2026 - Q3 2026</p>
-                                <p class="mt-2 text-slate-600">Focus: Introduce the first version of the AI Discovery Feed and add features that drive user engagement and make the platform a central hub for campus life.</p>
-                            </button>
-                             <ul class="roadmap-details hidden mt-4 space-y-2 text-sm pl-4 border-l-2 border-slate-200 ml-2">
-                                <li>🚀 Develop & train V1 of the AI matching algorithm (Content-Based)</li>
-                                <li>🚀 Launch the AI Discovery Feed on the main dashboard</li>
-                                <li>🚀 Integrate an Events Calendar for clubs and fests</li>
-                                <li>🚀 Add official pages for VIT Clubs & Chapters</li>
-                                <li>🚀 Implement a notification system for requests and messages</li>
-                            </ul>
-                        </div>
-                        <!-- Phase 3 -->
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                           <button class="roadmap-toggle w-full text-left">
-                                <h4 class="text-xl font-bold text-slate-800">Phase 3: Advanced AI & Platform Expansion</h4>
-                                <p class="text-sm font-semibold text-slate-500">Q4 2026</p>
-                                <p class="mt-2 text-slate-600">Focus: Refine the AI to provide highly accurate, semantic suggestions and expand the platform's utility with trust-building and mentorship features.</p>
-                           </button>
-                             <ul class="roadmap-details hidden mt-4 space-y-2 text-sm pl-4 border-l-2 border-slate-200 ml-2">
-                                <li>🧠 Implement Semantic Search engine using NLP models</li>
-                                <li>🧠 Refine AI with Collaborative Filtering based on user behavior</li>
-                                <li>🧠 Introduce a Skill Endorsement & Peer Feedback system</li>
-                                <li>🧠 Launch a "Peer Tutor / Mentor" connection portal</li>
-                                <li>🧠 Develop a Progressive Web App (PWA) for a better mobile experience</li>
-                            </ul>
-                        </div>
+        <section id="roadmap" class="py-16 md:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h3 class="text-3xl font-bold text-slate-900">From Dream to Deployment: Our Execution Strategy</h3>
+                    <p class="mt-4 text-slate-600">A successful website is built on a foundation of smart technology choices, a disciplined development process, and a forward-thinking AI strategy. Here is our detailed plan to convert this idea into a reality.</p>
+                </div>
+
+                <!-- Technical Details Section - MORE DETAIL -->
+                <div class="mt-16 grid md:grid-cols-3 gap-8 text-left">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-lg card-hover">
+                        <h4 class="font-semibold text-slate-800 flex items-center"><span class="text-2xl mr-3">⚙️</span>Technology Stack</h4>
+                        <p class="mt-3 text-sm text-slate-600">Our stack is chosen for scalability, performance, and its powerful ecosystem for AI development, ensuring we can build a robust and intelligent platform.</p>
+                        <ul class="mt-4 text-xs space-y-3">
+                            <li><strong class="font-semibold text-slate-700">Frontend:</strong> <span class="font-bold">React.js</span> for a dynamic, component-based UI, styled with <span class="font-bold">Tailwind CSS</span> for rapid, responsive design. We'll use <span class="font-bold">Axios</span> for efficient API communication.</li>
+                            <li><strong class="font-semibold text-slate-700">Backend:</strong> <span class="font-bold">Django & Django REST Framework</span>. This Python-based choice provides security, scalability, and seamless integration with AI/ML libraries.</li>
+                            <li><strong class="font-semibold text-slate-700">Database:</strong> <span class="font-bold">PostgreSQL</span>, a powerful relational database that handles complex queries and data relationships efficiently.</li>
+                             <li><strong class="font-semibold text-slate-700">Real-time Features:</strong> For chat and notifications, we'll use <span class="font-bold">Django Channels</span>, which integrates WebSockets directly into our Django application.</li>
+                            <li><strong class="font-semibold text-slate-700">Deployment:</strong> A split deployment for optimal performance. <span class="font-bold">Vercel</span> for the frontend and <span class="font-bold">Heroku</span> or AWS Elastic Beanstalk for the Django backend and database.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-lg card-hover">
+                        <h4 class="font-semibold text-slate-800 flex items-center"><span class="text-2xl mr-3">🔄</span>Development Process</h4>
+                        <p class="mt-3 text-sm text-slate-600">We will follow a professional Software Development Lifecycle (SDLC) using Agile principles to ensure quality, transparency, and adaptability.</p>
+                         <ul class="mt-4 text-xs space-y-3">
+                            <li><strong class="font-semibold text-slate-700">Sprint Planning:</strong> Before each two-week sprint, we will define clear goals and break down features into user stories and tasks.</li>
+                            <li><strong class="font-semibold text-slate-700">Version Control:</strong> We will use the <span class="font-bold">GitFlow</span> model on GitHub. This means maintaining separate branches for features, development, and a stable main branch to prevent bugs in the live app.</li>
+                            <li><strong class="font-semibold text-slate-700">Testing:</strong> We will implement <span class="font-bold">unit tests</span> for backend logic (using PyTest) and <span class="font-bold">component tests</span> for the frontend to ensure reliability.</li>
+                            <li><strong class="font-semibold text-slate-700">CI/CD:</strong> We will set up basic Continuous Integration/Continuous Deployment pipelines using GitHub Actions to automate testing and deployments, ensuring a stable and efficient workflow.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-lg card-hover">
+                        <h4 class="font-semibold text-slate-800 flex items-center"><span class="text-2xl mr-3">🤖</span>AI Model Strategy</h4>
+                        <p class="mt-3 text-sm text-slate-600">Our AI will evolve intelligently. We start by delivering immediate value with a smart, rule-based system, which allows us to collect the critical data needed to train truly advanced models.</p>
+                         <ul class="mt-4 text-xs space-y-3">
+                            <li><strong class="font-semibold text-slate-700">Phase 1 (Data Collection):</strong> We will build a "Simulated AI" using Django's ORM. A <span class="font-bold">weighted scoring algorithm</span> will rank matches based on shared skills and courses. This provides good initial results and, crucially, gathers user interaction data.</li>
+                            <li><strong class="font-semibold text-slate-700">Phase 2 (Content-Based AI):</strong> Using <span class="font-bold">Scikit-learn</span>, we will apply <span class="font-bold">TF-IDF Vectorization</span> to user profiles and project descriptions. This converts text into numerical data, allowing a machine learning model to find more nuanced content-based matches.</li>
+                            <li><strong class="font-semibold text-slate-700">Phase 3 (Semantic AI):</strong> We will implement state-of-the-art NLP. By using pre-trained <span class="font-bold">Sentence-BERT models</span> via the <span class="font-bold">Hugging Face</span> library, our search will understand the *meaning* of text, not just keywords, providing highly relevant semantic matching.</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-xl border border-slate-200">
-                    <h4 class="text-lg font-semibold text-slate-800 text-center mb-4">Phase Effort Allocation</h4>
-                    <div class="chart-container">
-                        <canvas id="phaseChart"></canvas>
+
+                <div class="mt-16 grid lg:grid-cols-3 gap-12 items-start">
+                    <div class="lg:col-span-2">
+                        <div id="timeline" class="relative pl-10 pt-2">
+                            <!-- Phase 1 -->
+                            <div class="timeline-item mb-12">
+                                <div class="timeline-dot border-indigo-600"></div>
+                                <button class="roadmap-toggle w-full text-left group">
+                                    <div class="flex items-center">
+                                        <div class="flex-grow">
+                                            <h4 class="text-xl font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">Phase 1: Project & Profile Foundation</h4>
+                                            <p class="text-sm font-semibold text-indigo-500">Q4 2025 - Q1 2026</p>
+                                        </div>
+                                        <div class="chevron text-slate-500 group-hover:text-indigo-600 text-2xl">▶</div>
+                                    </div>
+                                    <p class="mt-2 text-slate-600 text-left">Focus: Build the core platform where students can create detailed profiles and, most importantly, post their project ideas with specific role requirements.</p>
+                                </button>
+                                <ul class="roadmap-details hidden mt-4 space-y-3 text-sm pl-4 border-l-2 border-slate-200 ml-2 py-2">
+                                    <li>✅ Implement VIT Email-only Authentication</li>
+                                    <li>✅ Develop Student Profiles with skills, courses, and interests</li>
+                                    <li>✅ Create the "Post a Project Card" feature with role/team limit definition</li>
+                                    <li>✅ Build a search engine to discover Project Cards</li>
+                                    <li>✅ Implement a system to "Apply to Join" a project</li>
+                                    <li>✅ Create private team spaces with contact sharing upon acceptance</li>
+                                </ul>
+                            </div>
+                            <!-- Phase 2 -->
+                            <div class="timeline-item mb-12">
+                               <div class="timeline-dot border-blue-500"></div>
+                               <button class="roadmap-toggle w-full text-left group">
+                                    <div class="flex items-center">
+                                        <div class="flex-grow">
+                                            <h4 class="text-xl font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">Phase 2: Intelligent Team Building</h4>
+                                            <p class="text-sm font-semibold text-blue-500">Q2 2026 - Q3 2026</p>
+                                        </div>
+                                        <div class="chevron text-slate-500 group-hover:text-indigo-600 text-2xl">▶</div>
+                                    </div>
+                                    <p class="mt-2 text-slate-600 text-left">Focus: Launch the V1 of our AI matching engine to provide proactive team recommendations for open project roles.</p>
+                                </button>
+                                 <ul class="roadmap-details hidden mt-4 space-y-3 text-sm pl-4 border-l-2 border-slate-200 ml-2 py-2">
+                                    <li>🚀 Launch AI-powered "Recommended Teammates" feature for projects</li>
+                                    <li>🚀 Implement Semantic Search for natural language queries</li>
+                                    <li>🚀 Develop in-app chat for project team communication</li>
+                                    <li>🚀 Add a dashboard for managing project teams and applications</li>
+                                </ul>
+                            </div>
+                            <!-- Phase 3 -->
+                            <div class="timeline-item">
+                                <div class="timeline-dot border-purple-500"></div>
+                               <button class="roadmap-toggle w-full text-left group">
+                                    <div class="flex items-center">
+                                        <div class="flex-grow">
+                                            <h4 class="text-xl font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">Phase 3: Ecosystem & Innovation Hub</h4>
+                                            <p class="text-sm font-semibold text-purple-500">Q4 2026</p>
+                                        </div>
+                                        <div class="chevron text-slate-500 group-hover:text-indigo-600 text-2xl">▶</div>
+                                    </div>
+                                    <p class="mt-2 text-slate-600 text-left">Focus: Expand the platform beyond team formation to become a central hub for innovation, mentorship, and showcasing student work.</p>
+                               </button>
+                                 <ul class="roadmap-details hidden mt-4 space-y-3 text-sm pl-4 border-l-2 border-slate-200 ml-2 py-2">
+                                    <li>🧠 Introduce Skill Endorsements and Peer Feedback</li>
+                                    <li>🧠 Create a "Project Showcase" to feature completed projects</li>
+                                    <li>🧠 Launch a "Find a Mentor" feature connecting students with senior peers and alumni</li>
+                                    <li>🧠 Integrate with VIT Clubs & Chapters for official projects</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <p class="text-xs text-center text-slate-500 mt-4">This chart illustrates the strategic shift in development focus across the three phases, moving from foundational features to advanced AI.</p>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-lg">
+                        <h4 class="text-lg font-semibold text-slate-800 text-center mb-4">Phase Effort Allocation</h4>
+                        <div class="chart-container">
+                            <canvas id="phaseChart"></canvas>
+                        </div>
+                        <p class="text-xs text-center text-slate-500 mt-4">This chart illustrates the strategic shift in development focus across the three phases, moving from foundational features to advanced AI.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Success Metrics Section -->
-        <section id="metrics" class="mt-20 md:mt-28">
-            <div class="text-center max-w-3xl mx-auto">
-                <h3 class="text-3xl font-bold text-slate-800">Measuring Success</h3>
-                <p class="mt-4 text-slate-600">The success of VITsync will be measured by clear, quantifiable metrics that reflect user adoption, engagement, and the platform's effectiveness in fostering collaboration.</p>
-            </div>
-            <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-white p-6 rounded-xl border border-slate-200">
-                    <h4 class="font-bold text-slate-800">User Adoption</h4>
-                    <p class="mt-2 text-3xl font-bold text-slate-600">25%+</p>
-                    <p class="text-sm text-slate-500">of student body registered within the first year.</p>
+        <section id="metrics" class="py-16 md:py-24 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h3 class="text-3xl font-bold text-slate-900">Measuring Success</h3>
+                    <p class="mt-4 text-slate-600">The success of VITsync will be measured by clear, quantifiable metrics that prove we are solving the core problem: helping students build amazing things together.</p>
                 </div>
-                 <div class="bg-white p-6 rounded-xl border border-slate-200">
-                    <h4 class="font-bold text-slate-800">Connection Rate</h4>
-                    <p class="mt-2 text-3xl font-bold text-slate-600">60%+</p>
-                    <p class="text-sm text-slate-500">of connection requests accepted, indicating high-quality matches.</p>
-                </div>
-                 <div class="bg-white p-6 rounded-xl border border-slate-200">
-                    <h4 class="font-bold text-slate-800">Project Formation</h4>
-                    <p class="mt-2 text-3xl font-bold text-slate-600">500+</p>
-                    <p class="text-sm text-slate-500">successful project teams formed via the platform in the first year.</p>
-                </div>
-                 <div class="bg-white p-6 rounded-xl border border-slate-200">
-                    <h4 class="font-bold text-slate-800">Weekly Engagement</h4>
-                    <p class="mt-2 text-3xl font-bold text-slate-600">15%</p>
-                    <p class="text-sm text-slate-500">Weekly Active Users (WAU) to Monthly Active Users (MAU) ratio.</p>
+                <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-lg card-hover">
+                        <h4 class="font-bold text-slate-800">Project Formation Rate</h4>
+                        <p class="mt-2 text-4xl font-bold text-indigo-600">500+</p>
+                        <p class="text-sm text-slate-500">successful project teams formed in the first year.</p>
+                    </div>
+                     <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-lg card-hover">
+                        <h4 class="font-bold text-slate-800">Time to Find Team</h4>
+                        <p class="mt-2 text-4xl font-bold text-indigo-600">&lt; 7 Days</p>
+                        <p class="text-sm text-slate-500">average time from posting a project to forming a complete team.</p>
+                    </div>
+                     <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-lg card-hover">
+                        <h4 class="font-bold text-slate-800">User Adoption</h4>
+                        <p class="mt-2 text-4xl font-bold text-indigo-600">25%+</p>
+                        <p class="text-sm text-slate-500">of student body registered within the first year.</p>
+                    </div>
+                     <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-lg card-hover">
+                        <h4 class="font-bold text-slate-800">Match Success Rate</h4>
+                        <p class="mt-2 text-4xl font-bold text-indigo-600">70%</p>
+                        <p class="text-sm text-slate-500">of project invitations sent from AI recommendations are accepted.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
+        <!-- Meet the Innovator Section -->
+        <section id="creator" class="py-16 md:py-24 bg-gray-50">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h3 class="text-3xl font-bold text-slate-900">Meet the Innovator</h3>
+                </div>
+                <div class="mt-12 bg-white p-8 rounded-2xl border border-slate-200 shadow-xl max-w-2xl mx-auto card-hover">
+                    <div class="flex flex-col sm:flex-row items-center text-center sm:text-left gap-8">
+                        <div>
+                            <img class="w-32 h-32 rounded-full object-cover ring-4 ring-indigo-200" src="/prince2.jpg" alt="Photo of the project lead">
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-bold text-slate-800">Prince Kumar</h4>
+                            <p class="text-sm font-semibold text-indigo-600 mt-1">Project Lead & Visionary</p>
+                            <p class="mt-4 text-slate-600">"As a student at VIT, I've seen so many great ideas get lost because the right people never found each other. My goal with VITsync is to build the platform I wish I had – a tool that connects talent with ideas and empowers us to build amazing things together."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 mt-20 md:mt-28">
-        <div class="container mx-auto px-6 py-8 text-center text-slate-500">
-            <p class="font-bold text-lg text-slate-800">Cogni<span class="text-slate-600">Match</span></p>
+    <footer class="bg-white border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-slate-500">
+            <p class="font-bold text-lg text-slate-900">VIT<span class="text-indigo-600">sync</span></p>
             <p class="text-sm mt-2">A Student Project for VIT Chennai</p>
             <p class="text-xs mt-1">We welcome your feedback and guidance.</p>
         </div>
@@ -243,17 +353,33 @@ document.addEventListener('DOMContentLoaded', () => {
     roadmapToggles.forEach(toggle => {
         toggle.addEventListener('click', () => {
             const details = toggle.nextElementSibling;
-            const isHidden = details.classList.contains('hidden');
+            toggle.classList.toggle('open');
             
-            // Optional: Close other open items
-            // document.querySelectorAll('.roadmap-details').forEach(d => d.classList.add('hidden'));
-            
-            if(isHidden) {
+            if (details.classList.contains('hidden')) {
+                // Smoothly open
                 details.classList.remove('hidden');
+                setTimeout(() => {
+                    details.style.maxHeight = details.scrollHeight + "px";
+                    details.style.opacity = 1;
+                }, 10);
             } else {
-                details.classList.add('hidden');
+                // Smoothly close
+                details.style.maxHeight = '0px';
+                details.style.opacity = 0;
+                setTimeout(() => {
+                    details.classList.add('hidden');
+                }, 300); // Match transition duration
             }
         });
+
+        // Prepare for smooth transition
+        const details = toggle.nextElementSibling;
+        if (details) {
+            details.style.transition = 'max-height 0.3s ease-out, opacity 0.3s ease-out';
+            details.style.overflow = 'hidden';
+            details.style.maxHeight = '0px';
+            details.style.opacity = 0;
+        }
     });
 
     // Roadmap Doughnut Chart
@@ -261,26 +387,24 @@ document.addEventListener('DOMContentLoaded', () => {
     new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['Phase 1: MVP', 'Phase 2: AI & Community', 'Phase 3: Advanced AI'],
+            labels: ['Phase 1: Foundation', 'Phase 2: AI Team Building', 'Phase 3: Ecosystem'],
             datasets: [{
                 label: 'Effort Allocation',
                 data: [40, 35, 25], // Represents percentage of total project effort
                 backgroundColor: [
-                    'rgba(71, 85, 105, 0.7)',  // slate-600
-                    'rgba(100, 116, 139, 0.7)',// slate-500
-                    'rgba(148, 163, 184, 0.7)' // slate-400
+                    '#4f46e5', // Indigo 600
+                    '#3b82f6', // Blue 500
+                    '#8b5cf6'  // Purple 500
                 ],
-                borderColor: [
-                    '#334155',
-                    '#475569',
-                    '#64748b'
-                ],
-                borderWidth: 2
+                borderColor: '#ffffff',
+                borderWidth: 4,
+                hoverOffset: 8
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            cutout: '70%',
             plugins: {
                 legend: {
                     position: 'bottom',
@@ -294,6 +418,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 },
                 tooltip: {
+                    backgroundColor: '#1e293b',
+                    titleColor: '#f8fafc',
+                    bodyColor: '#cbd5e1',
+                    padding: 10,
+                    cornerRadius: 6,
                     callbacks: {
                         label: function(context) {
                             let label = context.label || '';
@@ -315,3 +444,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
+
